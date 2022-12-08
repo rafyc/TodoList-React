@@ -6,14 +6,15 @@ import { Context as AuthContext } from '../Context/AuthContext';
 
 
 const SignupScreen = ({ navigation }) => {
-  const { signup } = useContext(AuthContext);
+  const { state, signup } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <AuthForm
         headerText='Create an account'
         submitButtonText='Sign up'
         onSubmit={signup}
-        errorMessage={''}
+        errorMessage={state.errorMessage}
       ></AuthForm>
       <Navlink
         routeName='Login'

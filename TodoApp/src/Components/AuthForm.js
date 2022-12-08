@@ -5,7 +5,7 @@ import Spacer from './Spacer';
 
 
 
-const AuthForm = ({ submitButtonText, headerText, onSubmit }) => {
+const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +28,7 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit }) => {
         autoCorrect={false}
         secureTextEntry>
       </Input>
-
+      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
       <Spacer>
         <Button title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
       </Spacer>
@@ -44,6 +44,13 @@ const styles = StyleSheet.create({
   contianer: {
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  errorMessage: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: 'red',
+    marginLeft: 15,
+    marginBottom: 10
+  },
 })
 export default AuthForm;

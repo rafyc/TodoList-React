@@ -3,16 +3,20 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import AuthForm from '../Components/AuthForm';
 import Navlink from '../Components/Navlink';
 import { Context as AuthContext } from '../Context/AuthContext';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const LoginScreen = ({ navigation }) => {
-  const { login } = useContext(AuthContext)
+  const { state, login, clearError } = useContext(AuthContext);
+
+
   return (
     <View style={styles.container}>
       <AuthForm
         headerText='Log in to your account'
         submitButtonText='Log In'
         onSubmit={login}
-        errorMessage={''}
+        errorMessage={state.errorMessage}
       ></AuthForm>
       <Navlink
         routeName='Signup'
