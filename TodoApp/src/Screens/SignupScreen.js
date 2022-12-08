@@ -6,7 +6,7 @@ import { Context as AuthContext } from '../Context/AuthContext';
 
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, clearError } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>

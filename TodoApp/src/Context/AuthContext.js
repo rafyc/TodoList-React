@@ -21,7 +21,7 @@ const authReducer = (state, action) => {
 const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
-    dispatch({ type: "signin", payload: token });
+    dispatch({ type: "login", payload: token });
     navigationRef.navigate('Task')
   } else {
     navigationRef.navigate('Signup')
@@ -31,9 +31,8 @@ const tryLocalSignin = (dispatch) => async () => {
 const signup = dispatch => async ({ email, password }) => {
   try {
     const res = await trackerApi.post("/signup", { email, password });
-    dispatch({ type: "login", payload: res.data.token });
     await AsyncStorage.setItem("token", res.data.token);
-    dispatch({ type: "signin", payload: res.data.token });
+    dispatch({ type: "login", payload: res.data.token });
     navigationRef.navigate('Login')
 
 
@@ -68,13 +67,13 @@ const logout = dispatch => async () => {
   navigationRef.navigate('Login')
 };
 
-const clearError = dispatch => {
+const clearError = dispatch => () => {
   dispatch({ type: 'clear_err' });
 }
 
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signup, login, logout, tryLocalSignin },
+  { signup, login, logout, tryLocalSignin, clearError },
   { token: null, errorMessage: "" }
 )

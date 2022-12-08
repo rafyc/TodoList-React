@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as AuthProvider } from './src/Context/AuthContext';
 import ResolveAuthScreen from './src/Screens/ResolveAuthScreen';
 import { navigationRef } from './src/navigationRef';
+import { Provider as TaskProvider } from './src/Context/TaskContext';
 
 
 
@@ -15,16 +16,18 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <AuthProvider>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator
-          initialRouteName='Login'
-          screenOptions={{ headerShown: false }}>
-          <Stack.Screen name='Ath' component={ResolveAuthScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen name="Task" component={TaskScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <TaskProvider>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator
+            initialRouteName='Login'
+            screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='Ath' component={ResolveAuthScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+            <Stack.Screen name="Task" component={TaskScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </TaskProvider>
     </AuthProvider>
   );
 }

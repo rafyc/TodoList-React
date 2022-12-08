@@ -9,7 +9,9 @@ import { useFocusEffect } from '@react-navigation/native';
 const LoginScreen = ({ navigation }) => {
   const { state, login, clearError } = useContext(AuthContext);
 
-
+  useFocusEffect(
+    React.useCallback(() => { clearError })
+  )
   return (
     <View style={styles.container}>
       <AuthForm
