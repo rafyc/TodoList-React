@@ -1,8 +1,12 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 
 const TaskScreen = () => {
   return (
-    <Text>Task Screen</Text>
+    <View>
+      <Text>Task Screen</Text>
+      <Button title={'Sign out'} />
+    </View>
   );
 };
 

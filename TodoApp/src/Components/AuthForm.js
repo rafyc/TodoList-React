@@ -1,14 +1,14 @@
 import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from '@rneui/themed';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Spacer from './Spacer';
 
 
 
-const AuthForm = ({ submitButtonText, headerText }) => {
+const AuthForm = ({ submitButtonText, headerText, onSubmit }) => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.contianer}>
@@ -30,10 +30,10 @@ const AuthForm = ({ submitButtonText, headerText }) => {
       </Input>
 
       <Spacer>
-        <Button title={submitButtonText}></Button>
+        <Button title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
       </Spacer>
 
-    </View>
+    </View >
   );
 };
 

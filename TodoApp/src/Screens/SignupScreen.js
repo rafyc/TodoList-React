@@ -1,10 +1,11 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import AuthForm from '../Components/AuthForm';
+import Navlink from '../Components/Navlink';
 import { Context as AuthContext } from '../Context/AuthContext';
 
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const { signup } = useContext(AuthContext);
   return (
     <View style={styles.container}>
@@ -14,8 +15,17 @@ const SignupScreen = () => {
         onSubmit={signup}
         errorMessage={''}
       ></AuthForm>
+      <Navlink
+        routeName='Login'
+        text='Already have an account ? Login'
+        navigation={navigation}
+      />
     </View>
   );
+};
+
+SignupScreen.navigationOptions = {
+  headerShown: false,
 };
 
 const styles = StyleSheet.create({

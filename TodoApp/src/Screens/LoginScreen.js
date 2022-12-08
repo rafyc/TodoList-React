@@ -1,14 +1,17 @@
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import AuthForm from '../Components/AuthForm';
 import Navlink from '../Components/Navlink';
+import { Context as AuthContext } from '../Context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext)
   return (
     <View style={styles.container}>
       <AuthForm
         headerText='Log in to your account'
         submitButtonText='Log In'
-        onSubmit={''}
+        onSubmit={login}
         errorMessage={''}
       ></AuthForm>
       <Navlink
@@ -18,6 +21,10 @@ const LoginScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+LoginScreen.navigationOptions = {
+  headerShown: false,
 };
 
 const styles = StyleSheet.create({
