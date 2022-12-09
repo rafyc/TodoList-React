@@ -11,46 +11,55 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
   const [password, setPassword] = useState('');
 
   return (
-    <View style={styles.contianer}>
-      <Text h3 style={styles.title}>{headerText}</Text>
-      <Input
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}>
-      </Input>
-
-      <Input placeholder='Password'
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry>
-      </Input>
-      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+    <>
       <Spacer>
-        <Button title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
-      </Spacer>
+        <View style={styles.contianer}>
+          <Text h3 style={styles.title}>{headerText}</Text>
+          <Input
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            autoCorrect={false}>
+          </Input>
 
-    </View >
+          <Input placeholder='Password'
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            autoCorrect={false}
+            secureTextEntry>
+          </Input>
+          {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+          <Spacer>
+            <Button title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
+          </Spacer>
+        </View >
+      </Spacer>
+    </>
+
+
   );
 };
 
 const styles = StyleSheet.create({
   title: {
     marginBottom: 50,
+    alignItems: 'center',
+    textAlign: 'center'
+
   },
   contianer: {
     justifyContent: 'center',
-    alignItems: 'center'
+
   },
   errorMessage: {
     fontSize: 16,
     fontWeight: "800",
     color: 'red',
     marginLeft: 15,
-    marginBottom: 10
+    marginBottom: 10,
+
   },
 })
 export default AuthForm;

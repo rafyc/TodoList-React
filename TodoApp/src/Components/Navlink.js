@@ -8,9 +8,7 @@ const NavLink = ({ navigation, text, routeName }) => {
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate(routeName)}>
-      <Spacer>
-        <Text style={styles.link}>{text}</Text>
-      </Spacer>
+      <Text style={styles.link}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -18,7 +16,9 @@ const NavLink = ({ navigation, text, routeName }) => {
 const styles = StyleSheet.create({
   link: {
     color: 'blue',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 16
+
   }
 });
 

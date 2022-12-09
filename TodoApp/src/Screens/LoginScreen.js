@@ -20,11 +20,14 @@ const LoginScreen = ({ navigation }) => {
         onSubmit={login}
         errorMessage={state.errorMessage}
       ></AuthForm>
-      <Navlink
-        routeName='Signup'
-        text='Dont have an account ? Sign up'
-        navigation={navigation}
-      />
+      <View style={styles.navContainer}>
+        <Navlink
+          routeName='Signup'
+          text='Dont have an account ?'
+          navigation={navigation}
+        />
+        <Text style={styles.bold}>Sign up</Text>
+      </View>
     </View>
   );
 };
@@ -37,7 +40,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignContent: 'center',
+  },
+  navContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "baseline",
+  },
+  bold: {
+    paddingLeft: 5,
+    color: 'blue',
+    fontWeight: "800",
+    fontSize: 16
+  },
+  navlink: {
   }
 })
 
