@@ -1,4 +1,4 @@
-import trackerApi from '../api/api'
+import api from '../api/api'
 import createDataContext from './createDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as navigationRef from '../navigationRef';
@@ -13,7 +13,7 @@ const authReducer = (state, action) => {
     case 'add_err':
       return { ...state, errorMessage: action.payload };
     case 'clear_err':
-      return { ...state, errorMessage: '' };
+      return { ...state, errorMessage: "" };
     default:
       return state;
   }
@@ -28,13 +28,16 @@ const tryLocalSignin = (dispatch) => async () => {
   }
 };
 
+const clearError = (dispatch) => () => {
+  dispatch({ type: 'clear_err' });
+};
+
 const signup = dispatch => async ({ email, password }) => {
   try {
-    const res = await trackerApi.post("/signup", { email, password });
+    const res = await api.post("/signup", { email, password });
     await AsyncStorage.setItem("token", res.data.token);
     dispatch({ type: "login", payload: res.data.token });
     navigationRef.navigate('Login')
-
 
   } catch (error) {
     dispatch({
@@ -42,12 +45,17 @@ const signup = dispatch => async ({ email, password }) => {
       payload: "Something went wrong with sign up",
     })
   }
-
 };
 
 const login = dispatch => async ({ email, password }) => {
+
+
   try {
-    const res = await trackerApi.post("/signin", { email, password });
+    const res = await api.post("/signin", { id: email, password });
+    console.log('Hellooo');
+
+    await AsyncStorage.setItem("token", res.data.token);
+    console.log('Hello');
     dispatch({ type: "login", payload: res.data.token });
     navigationRef.navigate('Task')
 
@@ -67,9 +75,7 @@ const logout = dispatch => async () => {
   navigationRef.navigate('Login')
 };
 
-const clearError = dispatch => () => {
-  dispatch({ type: 'clear_err' });
-}
+
 
 
 export const { Provider, Context } = createDataContext(

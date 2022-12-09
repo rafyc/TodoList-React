@@ -11,8 +11,11 @@ const LoginScreen = ({ navigation }) => {
   const { state, login, clearError } = useContext(AuthContext);
 
   useFocusEffect(
-    React.useCallback(() => { clearError })
-  )
+    React.useCallback(() => {
+      clearError()
+      return () => '';
+    }, [])
+  );
   return (
     <View style={styles.container}>
       <Shadow distance={45} style={styles.Shadow}>

@@ -21,7 +21,7 @@ const App = () => {
           <Stack.Navigator
             initialRouteName='Login'
             screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='Ath' component={ResolveAuthScreen} />
+            <Stack.Screen name='Auth' component={ResolveAuthScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="Task" component={TaskScreen} />

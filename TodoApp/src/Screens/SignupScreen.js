@@ -4,10 +4,18 @@ import { } from 'react-native-gesture-handler';
 import AuthForm from '../Components/AuthForm';
 import Navlink from '../Components/Navlink';
 import { Context as AuthContext } from '../Context/AuthContext';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 
 const SignupScreen = ({ navigation }) => {
   const { state, signup, clearError } = useContext(AuthContext);
+  useFocusEffect(
+    React.useCallback(() => {
+      clearError()
+      return () => '';
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
