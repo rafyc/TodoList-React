@@ -5,6 +5,7 @@ import Spacer from './Spacer';
 
 
 
+
 const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
 
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
         <View style={styles.contianer}>
           <Text h3 style={styles.title}>{headerText}</Text>
           <Input
+            inputStyle={{ color: 'white' }}
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
@@ -24,6 +26,7 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
           </Input>
 
           <Input placeholder='Password'
+            inputStyle={{ color: '#75CAE8' }}
             value={password}
             onChangeText={setPassword}
             autoCapitalize="none"
@@ -32,7 +35,9 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
           </Input>
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
           <Spacer>
-            <Button title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
+            <Button buttonStyle={{ backgroundColor: 'rgba(17, 202, 232, 1)' }}
+              titleStyle={{ marginHorizontal: 20, color: '#2A3260' }}
+              title={submitButtonText} onPress={() => onSubmit({ email, password })}></Button>
           </Spacer>
         </View >
       </Spacer>
@@ -46,8 +51,16 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 50,
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'white'
 
+  },
+  button: {
+
+  },
+
+  input: {
+    // color: 'white',
   },
   contianer: {
     justifyContent: 'center',

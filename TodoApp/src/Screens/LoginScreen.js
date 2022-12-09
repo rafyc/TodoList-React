@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AuthForm from '../Components/AuthForm';
 import Navlink from '../Components/Navlink';
 import { Context as AuthContext } from '../Context/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { Shadow } from 'react-native-shadow-2';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -14,7 +15,14 @@ const LoginScreen = ({ navigation }) => {
   )
   return (
     <View style={styles.container}>
-      <AuthForm
+      <Shadow distance={45} style={styles.Shadow}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('./../assets/logo-kick.png')}
+        />
+        <Image />
+      </Shadow>
+      <AuthForm style={styles.auth}
         headerText='Log in to your account'
         submitButtonText='Log In'
         onSubmit={login}
@@ -26,7 +34,9 @@ const LoginScreen = ({ navigation }) => {
           text='Dont have an account ?'
           navigation={navigation}
         />
-        <Text style={styles.bold}>Sign up</Text>
+        <TouchableOpacity onPress={() => { navigation.navigate('Signup') }}>
+          <Text style={styles.bold}>Sign up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -40,6 +50,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2A3260'
+  },
+  Shadow: {
+    borderRadius: 30
+  },
+  tinyLogo: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+
+  },
+  auth: {
   },
   navContainer: {
     flexDirection: "row",
@@ -48,7 +71,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     paddingLeft: 5,
-    color: 'blue',
+    color: '#75CAE8',
     fontWeight: "800",
     fontSize: 16
   },
