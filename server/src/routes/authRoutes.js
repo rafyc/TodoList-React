@@ -20,8 +20,8 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { id, password } = req.body;
+  if (!id || !password) {
     return res.status(422).send({ error: "Must provide all credentials" });
   }
 
