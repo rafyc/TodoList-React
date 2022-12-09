@@ -19,7 +19,7 @@ const App = () => {
       <TaskProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName='Login'
+            initialRouteName='Auth'
             screenOptions={{ headerShown: false }}>
             <Stack.Screen name='Auth' component={ResolveAuthScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />

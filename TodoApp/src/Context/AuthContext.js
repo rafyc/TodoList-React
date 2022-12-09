@@ -52,10 +52,8 @@ const login = dispatch => async ({ email, password }) => {
 
   try {
     const res = await api.post("/signin", { id: email, password });
-    console.log('Hellooo');
 
     await AsyncStorage.setItem("token", res.data.token);
-    console.log('Hello');
     dispatch({ type: "login", payload: res.data.token });
     navigationRef.navigate('Task')
 
