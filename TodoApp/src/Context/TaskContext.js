@@ -44,10 +44,15 @@ const deleteTask = dispatch => async (id) => {
 
 }
 
-const editTask = (dispatch) => (text) => {
-  console.log(text);
-  dispatch({ type: 'edit_task', payload: text })
+const editTask = (dispatch) => async (task, id) => {
+  try {
+    console.log({ task });
+    api.patch(`/tasks/${id}`, { name: task })
+    dispatch({ type: 'edit_task', payload: task })
 
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 

@@ -7,6 +7,7 @@ import Spacer from '../Components/Spacer';
 import { Context as TaskContext } from '../Context/TaskContext';
 import { Shadow } from 'react-native-shadow-2';
 import { Icon } from '@rneui/themed';
+import TaskList from './TaskList';
 
 
 
@@ -16,9 +17,9 @@ const TaskForm = ({ title, tasks }) => {
   const { logout } = useContext(AuthContext);
   const [task, setTask] = useState('')
   const [showInput, setShowInput] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [editText, setEditText] = useState(false);
-  const { addTask, deleteTask, editTask } = useContext(TaskContext);
+  const [taskId, setTaskId] = useState('');
+  const [editInput, setEditInput] = useState(false);
+  const { state, editTask, addTask } = useContext(TaskContext);
 
 
   const handleClick = () => {
@@ -31,35 +32,49 @@ const TaskForm = ({ title, tasks }) => {
     setTask('')
   }
 
-  const handleEdit = () => {
-    setShowEdit(true)
+  const handleSubmitEdit = () => {
+    setEditInput(false);
+    editTask(task, taskId)
+    setTask('')
+  }
+
+
+  const handleEdit = (name, id) => {
+    setEditInput(true);
+    setTask(name);
+    setTaskId(id);
+
+
+
+
+    console.log();
+
+
   };
 
-  const handleSubmitEdit = () => {
-    editTask(editText)
-    setShowEdit(false)
-  };
+
 
   // const handleDelete = () => {
   //   deletTask({ taskId });
   // }
 
-
+  // const x = state.map(s => s.name)
+  // console.log(x);
   return (
     <>
       <View style={styles.container}>
         <Text h3 style={styles.h3} >{title}</Text>
         <Spacer>
           <>
-            {showEdit ? <TextInput
+
+            {editInput ? <TextInput
               style={styles.input}
               placeholderTextColor='white'
-              placeholder={''}
-              value={editText}
+              placeholder=""
+              value={task}
               autoFocus
-              onChangeText={setEditText}
-              onSubmitEditing={handleSubmitEdit}
-            >
+              onChangeText={setTask}
+              onSubmitEditing={handleSubmitEdit}>
             </TextInput> : null}
 
             {showInput ? <TextInput
@@ -69,36 +84,10 @@ const TaskForm = ({ title, tasks }) => {
               value={task}
               autoFocus
               onChangeText={setTask}
-              onSubmitEditing={handleSubmit}
-            >
+              onSubmitEditing={handleSubmit}>
             </TextInput> : null}
-            <FlatList
-              style={styles.listContainer}
-              data={tasks}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return (
-
-                  <TouchableOpacity onPress={handleEdit}>
-                    <ListItem style={styles.list}>
-                      <ListItem.Content >
-                        <View style={styles.taskContainer}>
-                          <TouchableOpacity
-                            onPress={() => deleteTask(item._id)}>
-                            <Icon style={styles.taskIcon}
-                              name='trash-2'
-                              type='feather'
-                              color='#2A3260' />
-                          </TouchableOpacity>
-                          <ListItem.Title>{item.name}</ListItem.Title>
-                        </View>
-                      </ListItem.Content>
-
-                      <ListItem.Chevron />
-                    </ListItem>
-                  </TouchableOpacity>
-                );
-              }}
+            <TaskList
+              handleEdit={handleEdit}
             />
           </>
         </Spacer>
@@ -170,5 +159,3 @@ const styles = StyleSheet.create({
 })
 
 export default TaskForm;
-
-

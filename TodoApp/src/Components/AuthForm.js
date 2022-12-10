@@ -2,7 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from '@rneui/themed';
 import React, { useState } from 'react';
 import Spacer from './Spacer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -12,7 +11,6 @@ const AuthForm = ({ submitButtonText, headerText, onSubmit, errorMessage }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // AsyncStorage.setItem(email)
   return (
     <>
       <Spacer>
