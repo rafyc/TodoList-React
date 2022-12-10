@@ -9,9 +9,8 @@ const taskReducer = (state, action) => {
       return { ...state, name: action.payload }
     case 'delet_task':
       return { ...state }
-      return
     case 'edit_task':
-      return
+      return { ...state, name: action.payload }
     default: state
   }
 }
@@ -27,7 +26,6 @@ const getTasks = async (dispatch) => {
 
 const addTask = (dispatch) => async ({ task }) => {
   try {
-
     const res = await api.post('/tasks', { name: task })
     dispatch({ type: 'add_task', payload: res.data.name });
   } catch (error) {
@@ -46,7 +44,9 @@ const deleteTask = dispatch => async (id) => {
 
 }
 
-const editTask = () => {
+const editTask = (dispatch) => (text) => {
+  console.log(text);
+  dispatch({ type: 'edit_task', payload: text })
 
 }
 

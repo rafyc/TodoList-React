@@ -16,8 +16,9 @@ const TaskForm = ({ title, tasks }) => {
   const { logout } = useContext(AuthContext);
   const [task, setTask] = useState('')
   const [showInput, setShowInput] = useState(false);
-  const { addTask, deleteTask } = useContext(TaskContext);
-
+  const [showEdit, setShowEdit] = useState(false);
+  const [editText, setEditText] = useState(false);
+  const { addTask, deleteTask, editTask } = useContext(TaskContext);
 
 
   const handleClick = () => {
@@ -27,7 +28,17 @@ const TaskForm = ({ title, tasks }) => {
   const handleSubmit = () => {
     setShowInput(false);
     addTask({ task });
+    setTask('')
   }
+
+  const handleEdit = () => {
+    setShowEdit(true)
+  };
+
+  const handleSubmitEdit = () => {
+    editTask(editText)
+    setShowEdit(false)
+  };
 
   // const handleDelete = () => {
   //   deletTask({ taskId });
@@ -39,45 +50,57 @@ const TaskForm = ({ title, tasks }) => {
       <View style={styles.container}>
         <Text h3 style={styles.h3} >{title}</Text>
         <Spacer>
-          {showInput ? <TextInput
-            style={styles.input}
-            placeholderTextColor='white'
-            placeholder="What needs to be done ?"
-            value={task}
-            autoFocus
-            onChangeText={setTask}
-            onSubmitEditing={handleSubmit}
-          >
-          </TextInput> : null}
-          <FlatList
-            style={styles.listContainer}
-            data={tasks}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => {
-              return (
+          <>
+            {showEdit ? <TextInput
+              style={styles.input}
+              placeholderTextColor='white'
+              placeholder={''}
+              value={editText}
+              autoFocus
+              onChangeText={setEditText}
+              onSubmitEditing={handleSubmitEdit}
+            >
+            </TextInput> : null}
 
-                <TouchableOpacity>
-                  <ListItem style={styles.list}>
-                    <ListItem.Content >
-                      <View style={styles.taskContainer}>
-                        <TouchableOpacity
-                          onPress={() => deleteTask(item._id)}
-                        >
-                          <Icon style={styles.taskIcon}
-                            name='trash-2'
-                            type='feather'
-                            color='#2A3260' />
-                        </TouchableOpacity>
-                        <ListItem.Title>{item.name}</ListItem.Title>
-                      </View>
-                    </ListItem.Content>
+            {showInput ? <TextInput
+              style={styles.input}
+              placeholderTextColor='white'
+              placeholder="What needs to be done ?"
+              value={task}
+              autoFocus
+              onChangeText={setTask}
+              onSubmitEditing={handleSubmit}
+            >
+            </TextInput> : null}
+            <FlatList
+              style={styles.listContainer}
+              data={tasks}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => {
+                return (
 
-                    <ListItem.Chevron />
-                  </ListItem>
-                </TouchableOpacity>
-              );
-            }}
-          />
+                  <TouchableOpacity onPress={handleEdit}>
+                    <ListItem style={styles.list}>
+                      <ListItem.Content >
+                        <View style={styles.taskContainer}>
+                          <TouchableOpacity
+                            onPress={() => deleteTask(item._id)}>
+                            <Icon style={styles.taskIcon}
+                              name='trash-2'
+                              type='feather'
+                              color='#2A3260' />
+                          </TouchableOpacity>
+                          <ListItem.Title>{item.name}</ListItem.Title>
+                        </View>
+                      </ListItem.Content>
+
+                      <ListItem.Chevron />
+                    </ListItem>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </>
         </Spacer>
         <View style={styles.addIcon}>
           <TouchableOpacity
