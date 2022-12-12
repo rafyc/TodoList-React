@@ -11,6 +11,8 @@ const taskReducer = (state, action) => {
       return { ...state }
     case 'edit_task':
       return { ...state, name: action.payload }
+    case 'check_task':
+      return { ...state, finished: action.payload }
     default: state
   }
 }
@@ -53,11 +55,21 @@ const editTask = (dispatch) => async (task, id) => {
   }
 }
 
+// const checkTask = (dispatch) => async (isChecked, id) => {
+//   // try {
+//   //   api.patch(`/tasks/${id}`, { finished: isChecked })
+//   //   dispatch({ type: 'check_task', payload: isChecked })
+
+//   // } catch (error) {
+//   //   console.log(error);
+//   // }
+// }
+
 
 
 export const { Context, Provider } = createDataContext(
   taskReducer,
-  { addTask, deleteTask, editTask, getTasks },
-  { name: '', id: '' }
+  { addTask, deleteTask, editTask, getTasks, /*checkTask*/ },
+  { name: '', id: '', /*finished: false*/ }
 );
 

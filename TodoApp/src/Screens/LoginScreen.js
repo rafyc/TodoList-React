@@ -16,6 +16,7 @@ const LoginScreen = ({ navigation }) => {
       return () => '';
     }, [])
   );
+
   return (
     <View style={styles.container}>
       <Shadow distance={45} style={styles.Shadow}>

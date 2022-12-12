@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Button, Text, Avatar } from '@rneui/base';
 import { Context as AuthContext } from '../Context/AuthContext';
@@ -11,17 +11,19 @@ import TaskList from './TaskList';
 
 
 
+
 const TaskForm = ({ title }) => {
   const { logout } = useContext(AuthContext);
   const [task, setTask] = useState('')
   const [showInput, setShowInput] = useState(false);
   const [taskId, setTaskId] = useState('');
   const [editInput, setEditInput] = useState(false);
-  const { editTask, addTask } = useContext(TaskContext);
+  const { editTask, addTask, state } = useContext(TaskContext);
 
 
 
   const handleClick = () => {
+    setTask('')
     setShowInput(true);
   }
   const handleSubmit = () => {
@@ -31,18 +33,22 @@ const TaskForm = ({ title }) => {
   }
   const handleSubmitEdit = () => {
     setEditInput(false);
-    editTask(deletNum(task), taskId)
-    setTask('')
+    { task ? editTask(deletNum(task), taskId) : null }
   }
   const handleEdit = (name, id) => {
+    console.log(name);
     setEditInput(true);
     setTask(name);
     setTaskId(id);
   };
 
   const deletNum = (task) => {
-    let candidate = task
-    return candidate.replace(/[^A-Za-z]/g, '')
+    if (task) {
+      let candidate = task
+      return (
+        candidate.replace(/\d/g, '')
+      )
+    }
   }
   return (
     <>
@@ -75,7 +81,9 @@ const TaskForm = ({ title }) => {
               onSubmitEditing={handleSubmit}>
             </TextInput> : null}
             <TaskList
-              handleEdit={handleEdit} />
+              handleEdit={handleEdit}>
+            </TaskList>
+
           </>
         </Spacer>
         <View style={styles.addIcon}>
@@ -102,6 +110,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     backgroundColor: '#2A3260',
+
+
   },
   Shadow: {
     borderRadius: 55,
@@ -124,7 +134,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: 'white',
     flex: 1,
-
   },
 })
 
