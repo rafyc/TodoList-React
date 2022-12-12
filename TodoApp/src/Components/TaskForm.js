@@ -1,65 +1,49 @@
 import React, { useContext, useState, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native';
-import { Button, Text, Avatar, ListItem } from '@rneui/base';
-// import { Input } from '@rneui/themed';
+import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Button, Text, Avatar } from '@rneui/base';
 import { Context as AuthContext } from '../Context/AuthContext';
 import Spacer from '../Components/Spacer';
 import { Context as TaskContext } from '../Context/TaskContext';
 import { Shadow } from 'react-native-shadow-2';
-import { Icon } from '@rneui/themed';
 import TaskList from './TaskList';
 
 
 
 
 
-const TaskForm = ({ title, tasks }) => {
+const TaskForm = ({ title }) => {
   const { logout } = useContext(AuthContext);
   const [task, setTask] = useState('')
   const [showInput, setShowInput] = useState(false);
   const [taskId, setTaskId] = useState('');
   const [editInput, setEditInput] = useState(false);
-  const { state, editTask, addTask } = useContext(TaskContext);
+  const { editTask, addTask } = useContext(TaskContext);
+
 
 
   const handleClick = () => {
     setShowInput(true);
   }
-
   const handleSubmit = () => {
     setShowInput(false);
-    addTask({ task });
+    addTask(deletNum(task));
     setTask('')
   }
-
   const handleSubmitEdit = () => {
     setEditInput(false);
-    editTask(task, taskId)
+    editTask(deletNum(task), taskId)
     setTask('')
   }
-
-
   const handleEdit = (name, id) => {
     setEditInput(true);
     setTask(name);
     setTaskId(id);
-
-
-
-
-    console.log();
-
-
   };
 
-
-
-  // const handleDelete = () => {
-  //   deletTask({ taskId });
-  // }
-
-  // const x = state.map(s => s.name)
-  // console.log(x);
+  const deletNum = (task) => {
+    let candidate = task
+    return candidate.replace(/[^A-Za-z]/g, '')
+  }
   return (
     <>
       <View style={styles.container}>
@@ -69,9 +53,11 @@ const TaskForm = ({ title, tasks }) => {
 
             {editInput ? <TextInput
               style={styles.input}
+              keyboardType="visible-password"
               placeholderTextColor='white'
               placeholder=""
               value={task}
+              maxFontSizeMultiplier={1}
               autoFocus
               onChangeText={setTask}
               onSubmitEditing={handleSubmitEdit}>
@@ -79,22 +65,22 @@ const TaskForm = ({ title, tasks }) => {
 
             {showInput ? <TextInput
               style={styles.input}
+              keyboardType="visible-password"
               placeholderTextColor='white'
               placeholder="What needs to be done ?"
               value={task}
+              maxFontSizeMultiplier={1}
               autoFocus
               onChangeText={setTask}
               onSubmitEditing={handleSubmit}>
             </TextInput> : null}
             <TaskList
-              handleEdit={handleEdit}
-            />
+              handleEdit={handleEdit} />
           </>
         </Spacer>
         <View style={styles.addIcon}>
           <TouchableOpacity
-            onPress={handleClick}
-          >
+            onPress={handleClick}>
             <Shadow style={styles.Shadow}>
               <Avatar
                 size={52}
@@ -116,23 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     backgroundColor: '#2A3260',
-
-  },
-  list: {
-    paddingTop: 15
-  },
-  taskIcon: {
-    flexDirection: 'row',
-    paddingRight: 20,
-  },
-  taskContainer: {
-    flexDirection: 'row'
-  },
-  signoutBtn: {
-    alignSelf: 'flex-end',
-
-  },
-  listContainer: {
   },
   Shadow: {
     borderRadius: 55,
@@ -144,11 +113,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     flex: 1,
     padding: 20,
-
   },
   input: {
     borderBottomWidth: 1,
     borderBottomColor: '#75CAE8',
+    fontSize: 20,
+
   },
   h3: {
     alignSelf: 'center',

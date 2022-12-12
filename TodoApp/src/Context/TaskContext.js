@@ -24,7 +24,7 @@ const getTasks = async (dispatch) => {
   }
 }
 
-const addTask = (dispatch) => async ({ task }) => {
+const addTask = (dispatch) => async (task) => {
   try {
     const res = await api.post('/tasks', { name: task })
     dispatch({ type: 'add_task', payload: res.data.name });
@@ -34,7 +34,6 @@ const addTask = (dispatch) => async ({ task }) => {
 }
 
 const deleteTask = dispatch => async (id) => {
-  console.log(id)
   try {
     api.delete(`/tasks/${id}`)
     dispatch({ type: 'delete_task' })
@@ -46,7 +45,6 @@ const deleteTask = dispatch => async (id) => {
 
 const editTask = (dispatch) => async (task, id) => {
   try {
-    console.log({ task });
     api.patch(`/tasks/${id}`, { name: task })
     dispatch({ type: 'edit_task', payload: task })
 

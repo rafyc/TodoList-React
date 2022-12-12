@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { } from 'react-native-gesture-handler';
 import AuthForm from '../Components/AuthForm';
 import Navlink from '../Components/Navlink';
 import { Context as AuthContext } from '../Context/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { Shadow } from 'react-native-shadow-2';
 
 
 
@@ -19,6 +20,13 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Shadow distance={45} style={styles.Shadow}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('./../assets/logo-kick.png')}
+        />
+        <Image />
+      </Shadow>
       <AuthForm style={styles.auth}
         headerText='     Create an account     '
         submitButtonText='Sign up'
@@ -64,9 +72,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "baseline",
   },
-  nav: {
+  tinyLogo: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
 
-
+  },
+  Shadow: {
+    borderRadius: 30
   },
 })
 
