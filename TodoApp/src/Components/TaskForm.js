@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Button, Text, Avatar } from '@rneui/base';
 import { Context as AuthContext } from '../Context/AuthContext';
@@ -18,7 +18,7 @@ const TaskForm = ({ title }) => {
   const [showInput, setShowInput] = useState(false);
   const [taskId, setTaskId] = useState('');
   const [editInput, setEditInput] = useState(false);
-  const { editTask, addTask, state } = useContext(TaskContext);
+  const { editTask, addTask, getTasks } = useContext(TaskContext);
 
 
 
@@ -33,10 +33,11 @@ const TaskForm = ({ title }) => {
   }
   const handleSubmitEdit = () => {
     setEditInput(false);
-    { task ? editTask(deletNum(task), taskId) : null }
+    editTask(deletNum(task), taskId)
+
   }
   const handleEdit = (name, id) => {
-    console.log(name);
+    // console.log(name);
     setEditInput(true);
     setTask(name);
     setTaskId(id);
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#75CAE8',
     fontSize: 20,
+    color: 'white',
 
   },
   h3: {

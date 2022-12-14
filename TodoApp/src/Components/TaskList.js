@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import { color, ListItem, CheckBox } from '@rneui/base';
 import { Context as TaskContext } from '../Context/TaskContext';
@@ -6,21 +6,21 @@ import { Icon } from '@rneui/themed';
 
 
 const TaskList = ({ handleEdit }) => {
-  const { state, deleteTask, checkTask } = useContext(TaskContext);
+  const { state, deleteTask, checkTask, getTasks } = useContext(TaskContext);
 
-  // const [isChecked, setIsChecked] = useState(state.finished);
+  const onPress = (status, id) => {
+    checkTask(status, id)
+  }
 
-  // const check = () => {
-  //   ;
-  //   setIsChecked(!state);
-  //   checkTask(state, id)
-  // }
+  // const copy = [...state._id]
+  // console.log(`iciiiiiii ${state}`);
+
+
 
 
 
   return (
     <>
-
       <FlatList
         style={styles.listContainer}
         data={state}
@@ -39,18 +39,24 @@ const TaskList = ({ handleEdit }) => {
                         color='#2A3260' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() => {
-                        // setIsChecked(!isChecked)
-                        // checkTask(isChecked, item._id)
-                        // console.log(isChecked);
-                      }}>
-                      {/*!isChecked */'' ? <Icon style={styles.taskCheckIcon}
-                        name='check-square'
-                        type='feather'
-                        color='#2A3260' /> : <Icon style={styles.taskCheckIcon}
+                      onPress={() =>
+                        onPress(!item.finished, item._id)
+                      }
+                    >
+                      {!item.finished ? (
+                        <Icon style={styles.taskCheckIcon}
                           name='check-square'
                           type='feather'
-                          color='#00eb2c' />}
+                          color='#2A3260'
+                        />
+                      ) : (
+                        <Icon style={styles.taskCheckIcon}
+                          name='check-square'
+                          type='feather'
+                          color='#00eb2c'
+                        />
+                      )
+                      }{/* /* Green */}
                     </TouchableOpacity>
                     <ListItem.Title>{item.name}</ListItem.Title>
                   </View>
@@ -60,23 +66,22 @@ const TaskList = ({ handleEdit }) => {
             </TouchableOpacity>
           );
         }}
-
       />
-
     </>
-
   );
-};
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     textAlign: 'center',
     backgroundColor: '#2A3260',
 
+
   },
   list: {
-    paddingTop: 15
+    marginTop: 5,
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   taskIcon: {
     flexDirection: 'row',
@@ -113,7 +118,6 @@ const styles = StyleSheet.create({
   },
 
 })
-
 
 
 

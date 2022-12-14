@@ -17,7 +17,7 @@ const taskReducer = (state, action) => {
   }
 }
 
-const getTasks = async (dispatch) => {
+const getTasks = (dispatch) => async () => {
   try {
     const res = await api.get("/tasks")
     dispatch({ type: "get_tasks", payload: res.data });
@@ -28,7 +28,10 @@ const getTasks = async (dispatch) => {
 
 const addTask = (dispatch) => async (task) => {
   try {
-    const res = await api.post('/tasks', { name: task })
+    const res = await api.post('/tasks', { name: task }).then(async () => {
+      const res = await api.get("/tasks")
+      dispatch({ type: "get_tasks", payload: res.data });
+    })
     dispatch({ type: 'add_task', payload: res.data.name });
   } catch (error) {
     (error)
@@ -37,39 +40,55 @@ const addTask = (dispatch) => async (task) => {
 
 const deleteTask = dispatch => async (id) => {
   try {
-    api.delete(`/tasks/${id}`)
-    dispatch({ type: 'delete_task' })
+
+    await api.delete(`/tasks/${id}`).then(async () => {
+      dispatch({ type: 'delete_task' })
+
+      const res = await api.get("/tasks")
+      dispatch({ type: "get_tasks", payload: res.data });
+    })
   } catch (error) {
     console.log(error);
   }
-
 }
 
 const editTask = (dispatch) => async (task, id) => {
   try {
-    api.patch(`/tasks/${id}`, { name: task })
-    dispatch({ type: 'edit_task', payload: task })
+
+    await api.patch(`/tasks/${id}`, { name: task }).then(async () => {
+      dispatch({ type: 'edit_task', payload: task })
+
+      const res = await api.get("/tasks")
+      dispatch({ type: "get_tasks", payload: res.data });
+    })
+
+
 
   } catch (error) {
     console.log(error);
   }
 }
 
-// const checkTask = (dispatch) => async (isChecked, id) => {
-//   // try {
-//   //   api.patch(`/tasks/${id}`, { finished: isChecked })
-//   //   dispatch({ type: 'check_task', payload: isChecked })
+const checkTask = (dispatch) => async (status, id) => {
+  try {
+    console.log(`task checking id : ${id}`);
+    console.log(`task checking status : ${status}`);
+    await api.patch(`/tasks/${id}`, { finished: status }).then(async () => {
+      dispatch({ type: 'check_task', payload: status })
+      const res = await api.get("/tasks")
+      dispatch({ type: "get_tasks", payload: res.data });
+    })
 
-//   // } catch (error) {
-//   //   console.log(error);
-//   // }
-// }
 
 
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const { Context, Provider } = createDataContext(
   taskReducer,
-  { addTask, deleteTask, editTask, getTasks, /*checkTask*/ },
-  { name: '', id: '', /*finished: false*/ }
+  { addTask, deleteTask, editTask, getTasks, checkTask },
+  []
 );
 

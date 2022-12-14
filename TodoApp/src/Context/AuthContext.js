@@ -24,7 +24,7 @@ const tryLocalSignin = (dispatch) => async () => {
     dispatch({ type: "login", payload: token });
     navigationRef.navigate('Task')
   } else {
-    navigationRef.navigate('Signup')
+    navigationRef.navigate('Login')
   }
 };
 
@@ -37,7 +37,7 @@ const signup = dispatch => async ({ email, password }) => {
     const res = await api.post("/signup", { email, password });
     await AsyncStorage.setItem("token", res.data.token);
     dispatch({ type: "login", payload: res.data.token });
-    navigationRef.navigate('Login')
+    navigationRef.navigate('Task')
 
   } catch (error) {
     dispatch({

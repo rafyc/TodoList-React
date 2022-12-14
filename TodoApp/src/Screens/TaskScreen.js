@@ -2,21 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import { Context as TaskContext } from './../Context/TaskContext'
 import TaskForm from '../Components/TaskForm';
 
-
-
-
 const TaskScreen = () => {
-  const { state, getTasks } = useContext(TaskContext);
 
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
+  const { getTasks } = useContext(TaskContext);
 
+  useEffect(() => {
+    getTasks();
+    console.log('useEffect');
+  }, [])
   return (
     <>
       <TaskForm
         title='My Task'
-        tasks={state}
       ></TaskForm>
     </>
   )
